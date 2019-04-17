@@ -14,10 +14,10 @@ export default () => {
             🍺
           </span>
         </h1>
-        <Link className="btn" to="game">
+        <Link className="btn" to="/game">
           Play
         </Link>
-        <Link className="btn" to="highscores">
+        <Link className="btn" to="/highscores">
           High Scores
         </Link>
       </div>

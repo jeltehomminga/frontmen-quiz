@@ -1,38 +1,99 @@
 import React, { Component } from "react"
 import "./game.css"
-import questions from "../data/questions.json"
+import axios from "axios"
 
 class QuizGame extends Component {
+  state = {
+    questions: [],
+    acceptingAnswers: true,
+    score: 0,
+    timer: 30,
+    questionResult: [],
+    questionCounter: 0,
+    answerIndex: 0,
+  }
+  componentWillMount() {
+    axios
+      .get("https://opentdb.com/api.php?amount=10&encode=url3986")
+      .then(response => {
+        this.setState({ questions: response.data.results })
+        this.shuffleCorrectAnswer()
+        this.startTimer()
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+  handleClickAnswer = e => {
+    let newScore = this.state.score
+    if (e.target.value === this.state.answerIndex) {
+      newScore = newScore + 1
+    }
+    if (this.state.questionCounter < 9) {
+      let newQuestionCounter = this.state.questionCounter + 1
+      this.setState(
+        {
+          score: newScore,
+          questionCounter: newQuestionCounter,
+          timer: 30,
+        },
+        () => this.shuffleCorrectAnswer()
+      )
+      this.shuffleCorrectAnswer()
+      this.nextQuestion()
+    } else {
+      this.setState({ score: newScore })
+      console.log("End of Game")
+      debugger
+      this.props.navigate("index")
+    }
+  }
+  nextQuestion = () => {}
+  startTimer = () => {
+    this.intervalRef = setInterval(() => {
+      let newTime = this.state.timer - 1
+      this.setState({ timer: newTime })
+    }, 1000)
+  }
+  shuffleCorrectAnswer = () => {
+    let currentAnswers = [
+      ...this.state.questions[this.state.questionCounter]["incorrect_answers"],
+    ]
+    let answerIndex = Math.round(Math.random() * currentAnswers.length)
+    currentAnswers.splice(
+      answerIndex,
+      0,
+      this.state.questions[this.state.questionCounter]["correct_answer"]
+    )
+    this.setState({ currentAnswers, answerIndex })
+  }
   render() {
     return (
       <div className="container">
-        <div id="game" className="flex-center flex-column">
-          <h2 id="question">What is the answer?</h2>
-          <div className="choice-container">
-            <p className="choice-prefix">A</p>
-            <p className="choice-text" data-number="1">
-              Choice 1
-            </p>
+        {this.state.questions[this.state.questionCounter] && (
+          <div id="game" className="flex-center flex-column">
+            <div className="timer">{this.state.timer}</div>
+            <h2>
+              {unescape(
+                this.state.questions[this.state.questionCounter]["question"]
+              )}
+            </h2>
+            {this.state.currentAnswers &&
+              this.state.currentAnswers.map((answer, index) => (
+                <li
+                  className="choice-container"
+                  key={`li-answer-${index}`}
+                  onClick={e => this.handleClickAnswer(e)}
+                  value={index}
+                >
+                  <p className="choice-prefix">
+                    {String.fromCharCode(65 + index)}
+                  </p>
+                  <p className="choice-text">{unescape(answer)}</p>
+                </li>
+              ))}
           </div>
-          <div className="choice-container">
-            <p className="choice-prefix">B</p>
-            <p className="choice-text" data-number="2">
-              Choice 2
-            </p>
-          </div>
-          <div className="choice-container">
-            <p className="choice-prefix">C</p>
-            <p className="choice-text" data-number="3">
-              Choice 3
-            </p>
-          </div>
-          <div className="choice-container">
-            <p className="choice-prefix">D</p>
-            <p className="choice-text" data-number="4">
-              Choice 4
-            </p>
-          </div>
-        </div>
+        )}
       </div>
     )
   }

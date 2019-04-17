@@ -16,3 +16,11 @@
 .choice-text {
   padding: 1.5rem 2.5rem;
 }
+
+.timer {
+  font-size: 4rem;
+  padding: 1rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-bottom: 2rem;
+  border: #1f1e32;
+}
