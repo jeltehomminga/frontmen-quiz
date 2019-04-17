@@ -1,9 +1,13 @@
 import React, { Component } from "react"
 import "./game.css"
 import axios from "axios"
+import HighScores from "../components/HighScores"
+import GameQuestions from "../components/GameQuestions"
+import UserResult from "../components/UserResult"
 
 class QuizGame extends Component {
   state = {
+    name: "",
     questions: [],
     score: 0,
     correctAnswers: 0,
@@ -30,8 +34,10 @@ class QuizGame extends Component {
             }
           }
         }
-
-        this.setState({ questions: response.data.results })
+        this.setState({
+          questions: response.data.results,
+          name: this.props.location.state.name,
+        })
         this.shuffleCorrectAnswer()
         this.startTimer()
       })
@@ -63,7 +69,7 @@ class QuizGame extends Component {
       )
     } else {
       const userResult = {
-        name: "",
+        name: this.state.name,
         score: newScore,
         correctAnswers: this.state.correctAnswers,
       }
@@ -131,7 +137,7 @@ class QuizGame extends Component {
       let newResult = false
       let newHighScores = true
       let highScoreArray = this.state.userResults.sort((a, b) =>
-        a.score > b.score ? 1 : -1
+        a.score - b.score
       )
       this.setState({
         result: newResult,
@@ -147,160 +153,22 @@ class QuizGame extends Component {
           {this.state.questions[this.state.questionCounter] && (
             <div id="game" className="flex-center flex-column">
               {this.state.result && this.state.result === true ? (
-                <div>
-                  <h2 style={{ maxWidth: "100%" }}>Your Result</h2>
-                  <div className="score">
-                    <span>Score: </span>
-                    {
-                      this.state.userResults[this.state.userResults.length - 1][
-                        "score"
-                      ]
-                    }
-                  </div>
-                  <div className="score">
-                    <span>Correct Answers: </span>
-                    {
-                      this.state.userResults[this.state.userResults.length - 1][
-                        "correctAnswers"
-                      ]
-                    }
-                  </div>
-
-                  <div
-                    className="btn "
-                    value="NewGame"
-                    onClick={e => this.handleClickNavigate(e)}
-                  >
-                    New Game
-                  </div>
-                  <div
-                    className="btn "
-                    value="HighScore"
-                    onClick={e => this.handleClickNavigate(e)}
-                  >
-                    High Scores
-                  </div>
-                </div>
+                <UserResult
+                  userResults={this.state.userResults}
+                  handleClickNavigate={this.handleClickNavigate}
+                />
               ) : (
                 <>
                   {this.state.highScores && this.state.highScores === true ? (
-                    <>
-                      <h1>high scores</h1>
-                      {this.state.highScoreArray.length > 2 ? (
-                        <div className="top3">
-                          <div className="high-score" key="high-score-1">
-                            <span>Score: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 1
-                              ]["score"]
-                            }
-                            <span>Correct: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 1
-                              ]["correctAnswers"]
-                            }
-                            <span>Name: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 1
-                              ]["name"]
-                            }
-                          </div>
-                          <div className="high-score" key="high-score-2">
-                            <span>Score: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 2
-                              ]["score"]
-                            }
-                            <span>Correct: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 2
-                              ]["correctAnswers"]
-                            }
-                            <span>Name: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 2
-                              ]["name"]
-                            }
-                          </div>
-                          <div className="high-score" key="high-score-3">
-                            <span>Score: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 3
-                              ]["score"]
-                            }
-                            <span>Correct: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 3
-                              ]["correctAnswers"]
-                            }
-                            <span>Name: </span>
-                            {
-                              this.state.highScoreArray[
-                                this.state.highScoreArray.length - 3
-                              ]["name"]
-                            }
-                          </div>
-                        </div>
-                      ) : (
-                        <h2>Not enough scores yet</h2>
-                      )}
-                      <div
-                        className="btn "
-                        value="NewGame"
-                        onClick={e => this.handleClickNavigate(e)}
-                      >
-                        New Game
-                      </div>
-                    </>
+                    <HighScores highScoreArray={this.state.highScoreArray} />
                   ) : (
-                    <>
-                      <div
-                        className="timer"
-                        onChange={this.handleTimerChange}
-                        value={this.state.timer}
-                      >
-                        {this.state.timer}
-                      </div>
-                      <h2>
-                        {unescape(
-                          this.state.questions[this.state.questionCounter][
-                            "question"
-                          ]
-                        )}
-                      </h2>
-                      {this.state.currentAnswers &&
-                        this.state.currentAnswers.map((answer, index) => (
-                          <li
-                            value={index}
-                            className="choice-container"
-                            key={`li-answer-${index}`}
-                            onClick={e => this.handleClickAnswer(e)}
-                          >
-                            <p
-                              className="choice-prefix"
-                              value={index}
-                              onClick={e => this.handleClickAnswer(e)}
-                            >
-                              {String.fromCharCode(65 + index)}
-                            </p>
-                            <p
-                              value={index}
-                              className="choice-text"
-                              onClick={e => this.handleClickAnswer(e)}
-                            >
-                              {unescape(answer)}
-                            </p>
-                          </li>
-                        ))}
-                    </>
+                    <GameQuestions
+                      timer={this.state.timer}
+                      questions={this.state.questions}
+                      questionCounter={this.state.questionCounter}
+                      currentAnswers={this.state.currentAnswers}
+                      handleClickAnswer={this.handleClickAnswer}
+                    />
                   )}
                 </>
               )}

@@ -1,6 +1,6 @@
 :root {
   background-color: whitesmoke;
-  font-size: 62.5%;
+  font-size: 52.5%;
 }
 
 * {
@@ -33,7 +33,7 @@ h2 {
   font-size: 2.5rem;
   margin-bottom: 4rem;
   font-weight: 700;
-  max-width: 70%;
+  max-width: 63%;
 }
 
 h3 {
