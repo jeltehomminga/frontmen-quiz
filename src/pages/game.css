@@ -24,3 +24,24 @@
   margin-bottom: 2rem;
   border: #1f1e32;
 }
+
+.score {
+  font-size: 3rem;
+  padding: 2rem;
+}
+
+.new-game {
+  padding: 1rem;
+  margin-top: 2rem 0;
+}
+
+.top3 {
+  width: 60%;
+  font-size: 2rem;
+}
+
+.high-score {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}

@@ -33,7 +33,7 @@ h2 {
   font-size: 2.5rem;
   margin-bottom: 4rem;
   font-weight: 700;
-  max-width: 60%;
+  max-width: 70%;
 }
 
 h3 {
@@ -94,6 +94,18 @@ h3 {
   background-color: white;
 }
 
+.input-field {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+  width: 20rem;
+  text-align: center;
+  border: 0.1rem solid #1f1e32;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #1f1e32;
+  background-color: white;
+}
+
 .btn:hover,
 .choice-container:hover {
   cursor: pointer;
@@ -106,4 +118,11 @@ h3 {
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
+}
+
+@media screen and (max-width: 992px) {
+  :root {
+    background-color: whitesmoke;
+    font-size: 50.5%;
+  }
 }
