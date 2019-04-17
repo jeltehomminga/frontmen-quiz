@@ -23,7 +23,6 @@ class QuizGame extends Component {
           if (localStorage.hasOwnProperty(key)) {
             let value = localStorage.getItem(key)
             try {
-              debugger
               value = JSON.parse(value)
               this.setState({ [key]: value })
             } catch (e) {
@@ -74,11 +73,8 @@ class QuizGame extends Component {
         result: true,
         userResults: newUserResults,
       })
-      debugger
       localStorage.setItem("userResults", JSON.stringify(newUserResults))
       clearInterval(this.intervalRef)
-      console.log("End of Game")
-      //   this.props.navigate("/")
     }
   }
   nextQuestion = () => {
@@ -102,10 +98,8 @@ class QuizGame extends Component {
         result: true,
         userResults: newUserResults,
       })
-      debugger
       localStorage.setItem("userResults", JSON.stringify(newUserResults))
       clearInterval(this.intervalRef)
-      console.log("End of Game")
     }
   }
   startTimer = () => {
@@ -131,7 +125,6 @@ class QuizGame extends Component {
     this.setState({ currentAnswers, answerIndex })
   }
   handleClickNavigate = e => {
-    debugger
     if (e.target.innerText === "New Game") {
       this.props.navigate("/")
     } else if (e.target.innerText === "High Scores") {
@@ -140,8 +133,6 @@ class QuizGame extends Component {
       let highScoreArray = this.state.userResults.sort((a, b) =>
         a.score > b.score ? 1 : -1
       )
-      debugger
-      console.log(highScoreArray)
       this.setState({
         result: newResult,
         highScores: newHighScores,
@@ -192,73 +183,75 @@ class QuizGame extends Component {
                 </div>
               ) : (
                 <>
-                  {this.state.highScores &&
-                  this.state.highScores === true &&
-                  this.state.highScoreArray.length > 2 ? (
+                  {this.state.highScores && this.state.highScores === true ? (
                     <>
                       <h1>high scores</h1>
-                      <div className="top3">
-                        <div className="high-score" key="high-score-1">
-                          <span>Score: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 1
-                            ]["score"]
-                          }
-                          <span>Correct: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 1
-                            ]["correctAnswers"]
-                          }
-                          <span>Name: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 1
-                            ]["name"]
-                          }
+                      {this.state.highScoreArray.length > 2 ? (
+                        <div className="top3">
+                          <div className="high-score" key="high-score-1">
+                            <span>Score: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 1
+                              ]["score"]
+                            }
+                            <span>Correct: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 1
+                              ]["correctAnswers"]
+                            }
+                            <span>Name: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 1
+                              ]["name"]
+                            }
+                          </div>
+                          <div className="high-score" key="high-score-2">
+                            <span>Score: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 2
+                              ]["score"]
+                            }
+                            <span>Correct: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 2
+                              ]["correctAnswers"]
+                            }
+                            <span>Name: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 2
+                              ]["name"]
+                            }
+                          </div>
+                          <div className="high-score" key="high-score-3">
+                            <span>Score: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 3
+                              ]["score"]
+                            }
+                            <span>Correct: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 3
+                              ]["correctAnswers"]
+                            }
+                            <span>Name: </span>
+                            {
+                              this.state.highScoreArray[
+                                this.state.highScoreArray.length - 3
+                              ]["name"]
+                            }
+                          </div>
                         </div>
-                        <div className="high-score" key="high-score-2">
-                          <span>Score: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 2
-                            ]["score"]
-                          }
-                          <span>Correct: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 2
-                            ]["correctAnswers"]
-                          }
-                          <span>Name: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 2
-                            ]["name"]
-                          }
-                        </div>
-                        <div className="high-score" key="high-score-3">
-                          <span>Score: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 3
-                            ]["score"]
-                          }
-                          <span>Correct: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 3
-                            ]["correctAnswers"]
-                          }
-                          <span>Name: </span>
-                          {
-                            this.state.highScoreArray[
-                              this.state.highScoreArray.length - 3
-                            ]["name"]
-                          }
-                        </div>
-                      </div>
+                      ) : (
+                        <h2>Not enough scores yet</h2>
+                      )}
                       <div
                         className="btn "
                         value="NewGame"
