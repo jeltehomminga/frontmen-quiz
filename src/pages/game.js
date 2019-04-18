@@ -4,7 +4,8 @@ import axios from "axios"
 import HighScores from "../components/HighScores"
 import GameQuestions from "../components/GameQuestions"
 import UserResult from "../components/UserResult"
-import { Link } from "gatsby"
+import {withPrefix, Link } from "gatsby"
+
 
 class QuizGame extends Component {
   state = {
@@ -135,7 +136,7 @@ class QuizGame extends Component {
   }
   handleClickNavigate = e => {
     if (e.target.innerText === "New Game") {
-      this.props.navigate("")
+      this.props.navigate(withPrefix("/"))
     } else if (e.target.innerText === "High Scores") {
       let newResult = false
       let newHighScores = true
