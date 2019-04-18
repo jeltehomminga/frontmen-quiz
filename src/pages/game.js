@@ -4,6 +4,7 @@ import axios from "axios"
 import HighScores from "../components/HighScores"
 import GameQuestions from "../components/GameQuestions"
 import UserResult from "../components/UserResult"
+import { Link } from "gatsby"
 
 class QuizGame extends Component {
   state = {
@@ -18,6 +19,7 @@ class QuizGame extends Component {
     result: false,
     highScores: false,
     highScoreArray: [],
+    error: "",
   }
   componentWillMount() {
     axios
@@ -43,6 +45,7 @@ class QuizGame extends Component {
       })
       .catch(error => {
         console.log(error)
+        this.setState({ error: error })
       })
   }
   handleClickAnswer = e => {
@@ -132,12 +135,12 @@ class QuizGame extends Component {
   }
   handleClickNavigate = e => {
     if (e.target.innerText === "New Game") {
-      this.props.navigate("/")
+      this.props.navigate("")
     } else if (e.target.innerText === "High Scores") {
       let newResult = false
       let newHighScores = true
-      let highScoreArray = this.state.userResults.sort((a, b) =>
-          b.score - a.score
+      let highScoreArray = this.state.userResults.sort(
+        (a, b) => b.score - a.score
       )
       highScoreArray.splice(10, highScoreArray.length)
       this.setState({
@@ -151,6 +154,31 @@ class QuizGame extends Component {
     return (
       <>
         <div className="container">
+          {this.state.error ? (
+            <div id="home" className="flex-center flex-column">
+              <h1>
+                <span role="img" aria-label="beer-emoji">
+                  🍺
+                </span>{" "}
+                Frontmen Quiz{" "}
+                <span role="img" aria-label="beer-emoji">
+                  🍺
+                </span>
+              </h1>
+              <h1>
+                <span role="img" aria-label="beer-emoji">
+                  🐒
+                </span>
+                API on break
+              </h1>
+              <Link type="submit" className="btn" to="/">
+                Back
+              </Link>
+            </div>
+          ) : (
+            ""
+          )}
+
           {this.state.questions[this.state.questionCounter] && (
             <div id="game" className="flex-center flex-column">
               {this.state.result && this.state.result === true ? (
