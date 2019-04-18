@@ -137,8 +137,9 @@ class QuizGame extends Component {
       let newResult = false
       let newHighScores = true
       let highScoreArray = this.state.userResults.sort((a, b) =>
-        a.score - b.score
+          b.score - a.score
       )
+      highScoreArray.splice(10, highScoreArray.length)
       this.setState({
         result: newResult,
         highScores: newHighScores,

@@ -1,10 +1,7 @@
-import React from 'react';
+import React from "react"
 
 const UserResult = props => {
-    const handleClick = (e) => {
-        debugger
-        props.handleClickNavigate(e);
-    }
+  const handleClick = e => props.handleClickNavigate(e)
   return (
     <div>
       <h2 style={{ maxWidth: "100%" }}>Your Result</h2>
@@ -14,28 +11,16 @@ const UserResult = props => {
       </div>
       <div className="score">
         <span>Correct Answers: </span>
-        {
-          props.userResults[props.userResults.length - 1][
-            "correctAnswers"
-          ]
-        }
+        {props.userResults[props.userResults.length - 1]["correctAnswers"]}
       </div>
-      <div
-        className="btn "
-        value="NewGame"
-        onClick={e => handleClick(e)}
-      >
+      <div className="btn " value="NewGame" onClick={e => handleClick(e)}>
         New Game
       </div>
-      <div
-        className="btn "
-        value="HighScore"
-        onClick={e => handleClick(e)}
-      >
+      <div className="btn " value="HighScore" onClick={e => handleClick(e)}>
         High Scores
       </div>
     </div>
   )
 }
 
-export default UserResult;
+export default UserResult
