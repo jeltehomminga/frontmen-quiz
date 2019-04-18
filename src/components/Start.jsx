@@ -29,7 +29,7 @@ class Start extends Component {
             </span>
           </h1>
 
-          <form onSubmit={this.handleSubmit}>
+          <form className="flex-column" onSubmit={this.handleSubmit}>
             <input
               type="text"
               className="input-field"
