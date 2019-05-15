@@ -22,7 +22,7 @@ class QuizGame extends Component {
     highScoreArray: [],
     error: "",
   }
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get("https://opentdb.com/api.php?amount=10&encode=url3986")
       .then(response => {
@@ -161,7 +161,7 @@ class QuizGame extends Component {
                 <span role="img" aria-label="beer-emoji">
                   🍺
                 </span>{" "}
-                Frontmen Quiz{" "}
+                Pub Quiz{" "}
                 <span role="img" aria-label="beer-emoji">
                   🍺
                 </span>

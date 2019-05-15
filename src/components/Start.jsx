@@ -23,7 +23,7 @@ class Start extends Component {
             <span role="img" aria-label="beer-emoji">
               🍺
             </span>{" "}
-            Frontmen Quiz{" "}
+            Pub Quiz{" "}
             <span role="img" aria-label="beer-emoji">
               🍺
             </span>

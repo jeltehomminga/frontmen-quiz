@@ -1,3 +1,3 @@
 module.exports = {
-    pathPrefix: "/frontmen-quiz",
+    pathPrefix: "/react-quiz",
   }
